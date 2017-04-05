@@ -1,0 +1,106 @@
+{
+  "name": "seemly",
+  "version": "0.0.1",
+  "description": "A responsive dashboard written in react and koa2.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maticrivo/seemly.git"
+  },
+  "keywords": [
+    "koa",
+    "koa2",
+    "react",
+    "dashboard",
+    "nextjs"
+  ],
+  "author": "Matias Crivolotti <matioav@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maticrivo/seemly/issues"
+  },
+  "homepage": "https://github.com/maticrivo/seemly#readme",
+  "engines": {
+    "node": "^7.7.0"
+  },
+  "scripts": {
+    "dev": "nodemon --watch server server/index.js",
+    "dev:debug": "nodemon --watch server --inspect --inspect-brk server/index.js",
+    "build": "next build",
+    "prestart": "npm run build",
+    "start": "NODE_ENV=production node server/index.js",
+    "lint": "eslint --ignore-path .gitignore .",
+    "lint:staged": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": "lint"
+  },
+  "pre-commit": "lint:staged",
+  "dependencies": {
+    "boom": "^4.3.1",
+    "kcors": "^2.2.1",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-compose": "^3.2.1",
+    "koa-compress": "^2.0.0",
+    "koa-helmet": "^3.1.0",
+    "koa-router": "^7.1.0",
+    "next": "^2.0.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.1",
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
+    "lint-staged": "^3.4.0",
+    "nodemon": "^1.11.0",
+    "pre-commit": "^1.2.2"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "env": {
+      "browser": true,
+      "node": true,
+      "mocha": true,
+      "es6": true
+    },
+    "globals": {
+      "React": true
+    },
+    "plugins": [
+      "react",
+      "jsx-a11y"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 8,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "rules": {
+      "arrow-body-style": 0,
+      "arrow-parens": [
+        "error",
+        "always"
+      ],
+      "func-names": 0,
+      "max-len": [
+        2,
+        120
+      ],
+      "new-cap": 0,
+      "no-param-reassign": 0,
+      "prefer-arrow-callback": 0,
+      "react/jsx-filename-extension": 0,
+      "react/prop-types": 0,
+      "react/react-in-jsx-scope": 0
+    }
+  }
+}
