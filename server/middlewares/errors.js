@@ -5,6 +5,7 @@ module.exports = function handleErrors() {
     try {
       await next();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message, error.stack);
       let boom = error;
       if (!boom.isBoom) {

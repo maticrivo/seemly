@@ -1,19 +1,56 @@
-const io = require('socket.io-client');
+import 'isomorphic-fetch';
+import io from 'socket.io-client';
+import get from 'lodash/get';
+
+import Dashboard from '../lib/dashboard';
+import Title from '../widgets/title';
 
 export default class extends React.Component {
-  static async getInitialProps({ req }) {
-    return req
-      ? { userAgent: req.headers['user-agent'] }
-      : { userAgent: navigator.userAgent };
+  static async getInitialProps() {
+    // eslint-disable-next-line no-undef
+    const res = await fetch('http://localhost:3000/api/load');
+    const data = await res.json();
+    return { data };
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = props.data;
+
+    this.recieveData = this.recieveData.bind(this);
   }
 
   componentDidMount() {
     this.socket = io();
+
+    this.socket.on('data', this.recieveData);
+  }
+
+  recieveData({ widget, data }) {
+    this.setState({
+      [widget]: data,
+    });
   }
 
   render() {
-    return (<div>
-      Hello World {this.props.userAgent}
-    </div>);
+    return (
+      <Dashboard
+        style={{
+          gridTemplateColumns: '1fr 1fr',
+          gridTemplateRows: '1fr 1fr',
+          gridGap: '5px',
+          padding: '5px',
+        }}
+      >
+        <Title
+          title={get(this.state, 'title.data.title', '')}
+          style={{
+            gridColumn: '1 / span 2',
+            gridRow: '1 / span 2',
+          }}
+        />
+      </Dashboard>
+    );
   }
 }

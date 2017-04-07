@@ -37,6 +37,7 @@
   "pre-commit": "lint:staged",
   "dependencies": {
     "boom": "^4.3.1",
+    "isomorphic-fetch": "^2.2.1",
     "kcors": "^2.2.1",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
@@ -44,11 +45,13 @@
     "koa-compress": "^2.0.0",
     "koa-helmet": "^3.1.0",
     "koa-router": "^7.1.0",
-    "next": "^2.0.0",
+    "lodash": "^4.17.4",
+    "next": "^2.1.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "socket.io": "^1.7.3",
-    "socket.io-client": "^1.7.3"
+    "socket.io-client": "^1.7.3",
+    "styled-jsx": "^0.5.7"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.1",
@@ -91,10 +94,6 @@
         "always"
       ],
       "func-names": 0,
-      "max-len": [
-        2,
-        120
-      ],
       "new-cap": 0,
       "no-param-reassign": 0,
       "prefer-arrow-callback": 0,

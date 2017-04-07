@@ -5,6 +5,7 @@ const Boom = require('boom');
 const nextjs = require('next');
 const Router = require('koa-router');
 const middlewares = require('./middlewares');
+const api = require('./api');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = nextjs({ dev });
@@ -16,6 +17,8 @@ app.prepare().then(() => {
   const server = http.createServer(koa.callback());
   const io = IO(server);
 
+  koa.context.io = io;
+
   router.use(async (ctx, next) => {
     ctx.res.statusCode = 200;
     await next();
@@ -26,6 +29,7 @@ app.prepare().then(() => {
   });
 
   koa.use(middlewares());
+  koa.use(api());
 
   koa.use(router.routes());
   koa.use(router.allowedMethods({
@@ -33,17 +37,11 @@ app.prepare().then(() => {
     methodNotAllowed: () => new Boom.methodNotAllowed(),
   }));
 
-  io.on('connection', (socket) => {
-    console.log('a user connected');
-    socket.on('disconnect', () => {
-      console.log('user disconnected');
-    });
-  });
-
   server.listen(3000, (err) => {
     if (err) {
       throw err;
     }
-    console.log('> Ready on http://localhost:3000'); // eslint-disable-line no-console
+    // eslint-disable-next-line no-console
+    console.log('> Ready on http://localhost:3000');
   });
 });
