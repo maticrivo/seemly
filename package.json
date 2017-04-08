@@ -29,7 +29,8 @@
     "prestart": "npm run build",
     "start": "NODE_ENV=production node server/index.js",
     "lint": "eslint --ignore-path .gitignore .",
-    "lint:staged": "lint-staged"
+    "lint:staged": "lint-staged",
+    "generate": "plop --plopfile internals/generators/index.js"
   },
   "lint-staged": {
     "*.js": "lint"
@@ -62,6 +63,7 @@
     "eslint-plugin-react": "^6.10.3",
     "lint-staged": "^3.4.0",
     "nodemon": "^1.11.0",
+    "plop": "^1.7.4",
     "pre-commit": "^1.2.2"
   },
   "eslintConfig": {
