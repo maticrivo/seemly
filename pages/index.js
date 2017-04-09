@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import get from 'lodash/get';
 
 import Dashboard from '../lib/dashboard';
-import Title from '../widgets/title';
+import Title from '../widgets/Title';
 
 export default class extends React.Component {
   static async getInitialProps({ req }) {

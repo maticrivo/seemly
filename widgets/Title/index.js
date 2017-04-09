@@ -1,4 +1,4 @@
-import Widget from '../lib/widget';
+import Widget from '../../lib/widget';
 
 const Title = ({ title, subtitle, style = {} }) => (
   <Widget style={style}>

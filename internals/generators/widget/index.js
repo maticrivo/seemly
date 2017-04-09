@@ -18,7 +18,7 @@ module.exports = {
 
     const actions = [{
       type: 'add',
-      path: '../../widgets/{{dashCase name}}.js',
+      path: '../../widgets/{{ properCase name }}/index.js',
       templateFile: widgetTemplate,
       abortOnFail: true,
     }];
