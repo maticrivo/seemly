@@ -41,8 +41,48 @@ const emitEvent = (ctx, widget, data) => new Promise(async (resolve) => {
   resolve(true);
 });
 
+const getJobs = (jobsFolder) => new Promise((resolve, reject) => {
+  fs.readdir(jobsFolder, (err, files) => {
+    if (err) {
+      return reject(err);
+    }
+
+    try {
+      const jobs = [];
+
+      files.filter((file) => file.slice(-3) === '.js').forEach((job) => {
+        const {
+          name,
+          cronTime,
+          onTick,
+          onComplete,
+          timeZone,
+          runOnInit,
+          // eslint-disable-next-line global-require, import/no-dynamic-require
+        } = require(path.join(jobsFolder, job));
+
+        jobs.push({
+          name: name || job.slice(0, -3),
+          options: { cronTime, onTick, onComplete, timeZone, runOnInit },
+        });
+      });
+
+      return resolve(jobs);
+    } catch (jobErr) {
+      return reject(jobErr);
+    }
+  });
+});
+
+const jobTick = async (ctx, onTick) => {
+  const { widget, data } = await onTick();
+  ctx.emitEvent(ctx, widget, data);
+};
+
 module.exports = {
   getHistory,
   saveHistory,
   emitEvent,
+  getJobs,
+  jobTick,
 };

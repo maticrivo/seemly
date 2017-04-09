@@ -1,0 +1,23 @@
+const onTick = () => {
+  return new Promise((resolve) => {
+    resolve({
+      widget: '',
+      data: {},
+    });
+  });
+};
+{{#if complete}}
+
+const onComplete = () => {
+  console.log('complete', this);
+};
+{{/if}}
+
+module.exports = {
+  name: '{{ properCase name }}',
+  cronTime: '{{ time }}',
+  onTick,{{#if complete}}
+  onComplete,{{/if}}
+  timeZone: '{{ timezone }}',
+  runOnInit: {{ runOnInit }},
+};

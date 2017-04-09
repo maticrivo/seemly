@@ -30,6 +30,30 @@ route.post('/widget/:name', async (ctx) => {
   };
 });
 
+route.get('/jobs', async (ctx) => {
+  const jobs = ctx.jobs.map((job) => ({
+    name: job.name,
+    options: job.options,
+    running: !!job.cron.running,
+  }));
+
+  ctx.response.body = jobs;
+});
+
+route.get('/jobs/:name', async (ctx) => {
+  const jobs = ctx.jobs.filter((job) => job.name === ctx.params.name).map((job) => ({
+    name: job.name,
+    options: job.options,
+    running: !!job.cron.running,
+  }));
+
+  if (jobs.length === 0) {
+    throw new Boom.notFound(`Job '${ctx.params.name}' was not found.`);
+  }
+
+  ctx.response.body = jobs[0];
+});
+
 const api = () => compose([
   route.routes(),
   route.allowedMethods({

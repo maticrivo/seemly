@@ -1,11 +1,13 @@
+const path = require('path');
 const http = require('http');
+const { CronJob } = require('cron');
 const Koa = require('koa');
 const IO = require('socket.io');
 const nextjs = require('next');
 const Router = require('koa-router');
 const middlewares = require('./middlewares');
 const api = require('./api');
-const { emitEvent, saveHistory } = require('./utils');
+const { emitEvent, saveHistory, getJobs, jobTick } = require('./utils');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = nextjs({ dev });
@@ -21,6 +23,7 @@ app.prepare().then(async () => {
     koa.context.io = io;
     koa.context.emitEvent = emitEvent;
     koa.context.saveHistory = saveHistory;
+    koa.context.jobs = await getJobs(path.join(__dirname, '..', 'jobs'));
 
     koa.use(middlewares());
     koa.use(api());
@@ -46,6 +49,17 @@ app.prepare().then(async () => {
 
       // eslint-disable-next-line no-console
       console.log('> Ready on http://localhost:3000');
+    });
+
+    koa.context.jobs.map((job) => {
+      const onTick = job.options.onTick;
+      job.options.onTick = () => jobTick(koa.context, onTick);
+
+      const cron = new CronJob(job.options);
+      cron.start();
+      job.cron = cron;
+
+      return job;
     });
   } catch (error) {
     // eslint-disable-next-line no-console
