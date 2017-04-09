@@ -4,6 +4,7 @@ import get from 'lodash/get';
 
 import Dashboard from '../lib/dashboard';
 import Title from '../widgets/Title';
+import Clock from '../widgets/Clock';
 
 export default class extends React.Component {
   static async getInitialProps({ req }) {
@@ -56,6 +57,17 @@ export default class extends React.Component {
             gridColumn: '1 / span 2',
             gridRow: '1 / span 1',
           }}
+        />
+        <Clock
+          style={{
+            gridColumn: '1 / span 1',
+            gridRow: '2 / span 1',
+            textAlign: 'center',
+          }}
+          timeFormat={get(this.state, 'clock.data.timeFormat', 'HH:mm:ss')}
+          dateFormat={get(this.state, 'clock.data.dateFormat', 'MMMM Do YYYY')}
+          timezone={get(this.state, 'clock.data.timezone')}
+          showDate
         />
       </Dashboard>
     );

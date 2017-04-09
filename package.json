@@ -47,6 +47,8 @@
     "koa-helmet": "^3.1.0",
     "koa-router": "^7.1.0",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "moment-timezone": "^0.5.13",
     "next": "^2.1.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
