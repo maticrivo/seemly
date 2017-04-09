@@ -15,7 +15,7 @@ export default class extends React.Component {
       apiUrl = `${window.location.protocol}//${window.location.host}`;
     }
 
-    const res = await fetch(`${apiUrl}/api/load`);
+    const res = await fetch(`${apiUrl}/api/widgets`);
     const data = await res.json();
     return { data };
   }

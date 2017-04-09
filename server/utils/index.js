@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const set = require('lodash/set');
 
-const getHistory = () => {
+const getHistory = (widget) => {
   const historyFile = path.join(__dirname, '..', '..', 'history.json');
 
   return new Promise((resolve) => {
@@ -10,7 +10,7 @@ const getHistory = () => {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       const history = require(historyFile);
 
-      return resolve(history);
+      return resolve(widget ? history[widget] : history);
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log('No history.json file found');
