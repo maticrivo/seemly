@@ -18,12 +18,12 @@ route.get('/reload', async (ctx) => {
 });
 
 route.get('/load', async (ctx) => {
-  const history = getHistory();
+  const history = await getHistory();
   ctx.response.body = history;
 });
 
 route.post('/widget/:name', async (ctx) => {
-  const history = getHistory();
+  const history = await getHistory();
   set(history, [`${ctx.params.name}`, 'data'], ctx.request.body);
 
   await saveHistory(history);

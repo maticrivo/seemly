@@ -4,16 +4,18 @@ const fs = require('fs');
 const Utils = {};
 
 Utils.getHistory = () => {
-  let history = {};
-  try {
-    const historyFile = path.join(__dirname, '..', '..', 'history.json');
-    // eslint-disable-next-line global-require, import/no-dynamic-require
-    history = require(historyFile);
-  } catch (err) {
-    console.log('getHistory', 'no history file found');
-  }
+  const historyFile = path.join(__dirname, '..', '..', 'history.json');
+  return new Promise((resolve, reject) => {
+    try {
+      // eslint-disable-next-line global-require, import/no-dynamic-require
+      const history = require(historyFile);
 
-  return history;
+      return resolve(history);
+    } catch (err) {
+      console.err('getHistory', 'no history file found', err);
+      return reject(err);
+    }
+  });
 };
 
 Utils.saveHistory = (data) => {
