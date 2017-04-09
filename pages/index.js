@@ -41,21 +41,10 @@ export default class extends React.Component {
 
   render() {
     return (
-      <Dashboard
-        style={{
-          gridTemplateColumns: '1fr 1fr',
-          gridTemplateRows: '1fr 1fr',
-          gridGap: '5px',
-          padding: '5px',
-        }}
-      >
+      <Dashboard>
         <Title
           title={get(this.state, 'title.data.title', 'Welcome to Seemly')}
           subtitle={get(this.state, 'title.data.subtitle', 'Extremly flexible and easy to use dashboard')}
-          style={{
-            gridColumn: '1 / span 2',
-            gridRow: '1 / span 2',
-          }}
         />
       </Dashboard>
     );
