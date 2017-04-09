@@ -50,7 +50,8 @@ export default class extends React.Component {
         }}
       >
         <Title
-          title={get(this.state, 'title.data.title', '')}
+          title={get(this.state, 'title.data.title', 'Welcome to Seemly')}
+          subtitle={get(this.state, 'title.data.subtitle', 'Extremly flexible and easy to use dashboard')}
           style={{
             gridColumn: '1 / span 2',
             gridRow: '1 / span 2',
