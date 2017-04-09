@@ -1,7 +1,6 @@
 const http = require('http');
 const Koa = require('koa');
 const IO = require('socket.io');
-const Boom = require('boom');
 const nextjs = require('next');
 const Router = require('koa-router');
 const middlewares = require('./middlewares');
@@ -19,23 +18,22 @@ app.prepare().then(() => {
 
   koa.context.io = io;
 
-  router.use(async (ctx, next) => {
+  koa.use(middlewares());
+  koa.use(api());
+
+  koa.use(async (ctx, next) => {
     ctx.res.statusCode = 200;
     await next();
   });
 
+  router.use(async (ctx, next) => {
+    ctx.res.statusCode = 200;
+    await next();
+  });
   router.get('*', async (ctx) => {
     await handle(ctx.req, ctx.res);
   });
-
-  koa.use(middlewares());
-  koa.use(api());
-
   koa.use(router.routes());
-  koa.use(router.allowedMethods({
-    notImplemented: () => new Boom.notImplemented(),
-    methodNotAllowed: () => new Boom.methodNotAllowed(),
-  }));
 
   server.listen(3000, (err) => {
     if (err) {
