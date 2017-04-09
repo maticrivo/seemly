@@ -6,9 +6,15 @@ import Dashboard from '../lib/dashboard';
 import Title from '../widgets/title';
 
 export default class extends React.Component {
-  static async getInitialProps() {
-    // eslint-disable-next-line no-undef
-    const res = await fetch('http://localhost:3000/api/load');
+  static async getInitialProps({ req }) {
+    let apiUrl;
+    if (req) {
+      apiUrl = `http${req.headers.secure ? 's' : ''}://${req.headers.host}`;
+    } else {
+      apiUrl = `${window.location.protocol}//${window.location.host}`;
+    }
+
+    const res = await fetch(`${apiUrl}/api/load`);
     const data = await res.json();
     return { data };
   }
