@@ -1,27 +1,31 @@
 const path = require('path');
 const fs = require('fs');
+const set = require('lodash/set');
 
-const Utils = {};
-
-Utils.getHistory = () => {
+const getHistory = () => {
   const historyFile = path.join(__dirname, '..', '..', 'history.json');
-  return new Promise((resolve, reject) => {
+
+  return new Promise((resolve) => {
     try {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       const history = require(historyFile);
 
       return resolve(history);
     } catch (err) {
-      console.err('getHistory', 'no history file found', err);
-      return reject(err);
+      // eslint-disable-next-line no-console
+      console.log('No history.json file found');
+      return resolve({});
     }
   });
 };
 
-Utils.saveHistory = (data) => {
+const saveHistory = async (widget, data) => {
   const historyFile = path.join(__dirname, '..', '..', 'history.json');
+  const history = await getHistory();
+  set(history, [`${widget}`, 'data'], data);
+
   return new Promise((resolve, reject) => {
-    fs.writeFile(historyFile, JSON.stringify(data), (err) => {
+    fs.writeFile(historyFile, JSON.stringify(history), (err) => {
       if (err) {
         return reject(err);
       }
@@ -31,4 +35,14 @@ Utils.saveHistory = (data) => {
   });
 };
 
-module.exports = Utils;
+const emitEvent = (ctx, widget, data) => new Promise(async (resolve) => {
+  ctx.io.emit('data', { widget, data: { data } });
+  await ctx.saveHistory(widget, data);
+  resolve(true);
+});
+
+module.exports = {
+  getHistory,
+  saveHistory,
+  emitEvent,
+};

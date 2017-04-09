@@ -1,10 +1,9 @@
 const compose = require('koa-compose');
 const Router = require('koa-router');
 const Boom = require('boom');
-const set = require('lodash/set');
 
 const handleErrors = require('../middlewares/errors');
-const { getHistory, saveHistory } = require('../utils');
+const { getHistory } = require('../utils');
 
 const route = new Router();
 
@@ -23,13 +22,12 @@ route.get('/load', async (ctx) => {
 });
 
 route.post('/widget/:name', async (ctx) => {
-  const history = await getHistory();
-  set(history, [`${ctx.params.name}`, 'data'], ctx.request.body);
+  await ctx.emitEvent(ctx, ctx.params.name, ctx.request.body);
 
-  await saveHistory(history);
-
-  ctx.io.emit('data', { widget: ctx.params.name, data: history.title });
-  ctx.response.body = history;
+  ctx.response.body = {
+    widget: ctx.params.name,
+    data: ctx.request.body,
+  };
 });
 
 const api = () => compose([
