@@ -26,7 +26,6 @@
     "dev": "nodemon --watch server server/index.js",
     "dev:debug": "nodemon --watch server --inspect --inspect-brk server/index.js",
     "build": "next build",
-    "prestart": "npm run build",
     "start": "NODE_ENV=production node server/index.js",
     "lint": "eslint --ignore-path .gitignore .",
     "lint:staged": "lint-staged",
