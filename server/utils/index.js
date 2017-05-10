@@ -35,10 +35,15 @@ const saveHistory = async (widget, data) => {
   });
 };
 
-const emitEvent = (ctx, widget, data) => new Promise(async (resolve) => {
-  ctx.io.emit('data', { widget, data: { data } });
-  await ctx.saveHistory(widget, data);
-  resolve(true);
+const emitEvent = (ctx, widget, data) => new Promise(async (resolve, reject) => {
+  try {
+    ctx.io.emit('data', { widget, data: { data } });
+    await ctx.saveHistory(widget, data);
+
+    resolve(true);
+  } catch (err) {
+    reject(err);
+  }
 });
 
 const getJobs = (jobsFolder) => new Promise((resolve, reject) => {
