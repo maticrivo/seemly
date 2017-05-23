@@ -12,7 +12,7 @@ route.prefix('/api')
 
 route.use('*', handleErrors())
 
-route.get('/refresh', async (ctx) => {
+route.post('/refresh', async (ctx) => {
   ctx.io.emit('refresh')
   ctx.res.body = { refresh: true }
 })
