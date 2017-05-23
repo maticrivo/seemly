@@ -7,22 +7,22 @@ module.exports = {
     default: 'Title',
     validate: (value) => {
       if (!(/.+/).test(value)) {
-        return 'The name is required';
+        return 'The name is required'
       }
 
-      return true;
-    },
+      return true
+    }
   }],
   actions: () => {
-    const widgetTemplate = './widget/_template.hbs';
+    const widgetTemplate = './widget/_template.hbs'
 
     const actions = [{
       type: 'add',
       path: '../../widgets/{{ properCase name }}/index.js',
       templateFile: widgetTemplate,
-      abortOnFail: true,
-    }];
+      abortOnFail: true
+    }]
 
-    return actions;
-  },
-};
+    return actions
+  }
+}

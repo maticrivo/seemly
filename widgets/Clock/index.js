@@ -1,44 +1,44 @@
-import moment from 'moment-timezone';
+import moment from 'moment-timezone'
 
-import Widget from '../../lib/widget';
+import Widget from '../../lib/widget'
 
 class Clock extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
-    this.clockTick = this.clockTick.bind(this);
+    this.clockTick = this.clockTick.bind(this)
 
     this.state = {
-      now: moment(),
-    };
+      now: moment()
+    }
   }
 
-  componentDidMount() {
-    this.interval = setInterval(this.clockTick, 1000);
+  componentDidMount () {
+    this.interval = setInterval(this.clockTick, 1000)
   }
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
+  componentWillUnmount () {
+    clearInterval(this.interval)
   }
 
-  clockTick() {
+  clockTick () {
     this.setState({
-      now: moment(),
-    });
+      now: moment()
+    })
   }
 
-  render() {
-    const { now } = this.state;
-    const { timeFormat, dateFormat, showDate, timezone } = this.props;
-    const time = timezone ? now.tz(timezone) : now;
+  render () {
+    const { now } = this.state
+    const { timeFormat, dateFormat, showDate, timezone } = this.props
+    const time = timezone ? now.tz(timezone) : now
 
     return (
       <Widget style={this.props.style}>
         {showDate && <h2>{time.format(dateFormat)}</h2>}
         <h1>{time.format(timeFormat)}</h1>
       </Widget>
-    );
+    )
   }
 }
 
-export default Clock;
+export default Clock

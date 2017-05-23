@@ -7,22 +7,22 @@ module.exports = {
     default: 'Dashing',
     validate: (value) => {
       if (!(/.+/).test(value)) {
-        return 'The name is required';
+        return 'The name is required'
       }
 
-      return true;
-    },
+      return true
+    }
   }],
   actions: () => {
-    const dashboardTemplate = './dashboard/_template.hbs';
+    const dashboardTemplate = './dashboard/_template.hbs'
 
     const actions = [{
       type: 'add',
       path: '../../pages/{{dashCase name}}.js',
       templateFile: dashboardTemplate,
-      abortOnFail: true,
-    }];
+      abortOnFail: true
+    }]
 
-    return actions;
-  },
-};
+    return actions
+  }
+}

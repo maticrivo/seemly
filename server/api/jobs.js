@@ -1,46 +1,46 @@
-const compose = require('koa-compose');
-const Router = require('koa-router');
-const Boom = require('boom');
+const compose = require('koa-compose')
+const Router = require('koa-router')
+const Boom = require('boom')
 
-const handleErrors = require('../middlewares/errors');
+const handleErrors = require('../middlewares/errors')
 
-const route = new Router();
+const route = new Router()
 
-route.prefix('/api/jobs');
+route.prefix('/api/jobs')
 
-route.use('*', handleErrors());
+route.use('*', handleErrors())
 
 route.get('/', async (ctx) => {
   const jobs = ctx.jobs.map((job) => ({
     name: job.name,
     options: job.options,
-    running: !!job.cron.running,
-  }));
+    running: !!job.cron.running
+  }))
 
-  ctx.response.body = jobs;
-});
+  ctx.response.body = jobs
+})
 
 route.get('/:name', async (ctx) => {
   const jobs = ctx.jobs.filter((job) => job.name === ctx.params.name).map((job) => ({
     name: job.name,
     options: job.options,
-    running: !!job.cron.running,
-  }));
+    running: !!job.cron.running
+  }))
 
   if (jobs.length === 0) {
-    throw new Boom.notFound(`Job '${ctx.params.name}' was not found.`);
+    throw new Boom.notFound(`Job '${ctx.params.name}' was not found.`) // eslint-disable-line new-cap
   }
 
-  ctx.response.body = jobs[0];
-});
+  ctx.response.body = jobs[0]
+})
 
 const jobs = () => compose([
   route.routes(),
   route.allowedMethods({
     throw: true,
-    notImplemented: () => new Boom.notImplemented(),
-    methodNotAllowed: () => new Boom.methodNotAllowed(),
-  }),
-]);
+    notImplemented: () => new Boom.notImplemented(), // eslint-disable-line new-cap
+    methodNotAllowed: () => new Boom.methodNotAllowed() // eslint-disable-line new-cap
+  })
+])
 
-module.exports = jobs;
+module.exports = jobs

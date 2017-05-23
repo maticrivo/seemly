@@ -1,53 +1,53 @@
-import 'isomorphic-fetch';
-import io from 'socket.io-client';
-import get from 'lodash/get';
+import 'isomorphic-fetch'
+import io from 'socket.io-client'
+import get from 'lodash/get'
 
-import Dashboard from '../lib/dashboard';
-import Title from '../widgets/Title';
-import Clock from '../widgets/Clock';
+import Dashboard from '../lib/dashboard'
+import Title from '../widgets/Title'
+import Clock from '../widgets/Clock'
 
 export default class extends React.Component {
-  static async getInitialProps({ req }) {
-    let apiUrl;
+  static async getInitialProps ({ req }) {
+    let apiUrl
     if (req) {
-      apiUrl = `http${req.headers.secure ? 's' : ''}://${req.headers.host}`;
+      apiUrl = `http${req.headers.secure ? 's' : ''}://${req.headers.host}`
     } else {
-      apiUrl = `${window.location.protocol}//${window.location.host}`;
+      apiUrl = `${window.location.protocol}//${window.location.host}`
     }
 
-    const res = await fetch(`${apiUrl}/api/widgets`);
-    const data = await res.json();
-    return { data };
+    const res = await fetch(`${apiUrl}/api/widgets`)
+    const data = await res.json()
+    return { data }
   }
 
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
-    this.state = props.data;
+    this.state = props.data
 
-    this.recieveData = this.recieveData.bind(this);
+    this.recieveData = this.recieveData.bind(this)
   }
 
-  componentDidMount() {
-    this.socket = io();
+  componentDidMount () {
+    this.socket = io()
 
-    this.socket.on('data', this.recieveData);
+    this.socket.on('data', this.recieveData)
   }
 
-  recieveData({ widget, data }) {
+  recieveData ({ widget, data }) {
     this.setState({
-      [widget]: data,
-    });
+      [widget]: data
+    })
   }
 
-  render() {
+  render () {
     return (
       <Dashboard
         style={{
           gridTemplateColumns: '1fr 1fr',
           gridTemplateRows: '1fr 1fr',
           gridGap: '5px',
-          padding: '5px',
+          padding: '5px'
         }}
       >
         <Title
@@ -55,14 +55,14 @@ export default class extends React.Component {
           subtitle={get(this.state, 'title.data.subtitle', 'Extremly flexible and easy to use dashboard')}
           style={{
             gridColumn: '1 / span 2',
-            gridRow: '1 / span 1',
+            gridRow: '1 / span 1'
           }}
         />
         <Clock
           style={{
             gridColumn: '1 / span 1',
             gridRow: '2 / span 1',
-            textAlign: 'center',
+            textAlign: 'center'
           }}
           timeFormat={get(this.state, 'clock.data.timeFormat', 'HH:mm:ss')}
           dateFormat={get(this.state, 'clock.data.dateFormat', 'MMMM Do YYYY')}
@@ -70,6 +70,6 @@ export default class extends React.Component {
           showDate
         />
       </Dashboard>
-    );
+    )
   }
 }

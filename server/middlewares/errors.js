@@ -1,19 +1,18 @@
-const Boom = require('boom');
+const Boom = require('boom')
 
-module.exports = function handleErrors() {
+module.exports = function handleErrors () {
   return async (ctx, next) => {
     try {
-      await next();
+      await next()
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error.message, error.stack);
-      let boom = error;
+      console.error(error.message, error.stack)
+      let boom = error
       if (!boom.isBoom) {
-        boom = new Boom.badImplementation(error.message);
+        boom = new Boom.badImplementation(error.message) // eslint-disable-line new-cap
       }
 
-      ctx.body = boom.output.payload;
-      ctx.status = boom.output.statusCode;
+      ctx.body = boom.output.payload
+      ctx.status = boom.output.statusCode
     }
-  };
-};
+  }
+}

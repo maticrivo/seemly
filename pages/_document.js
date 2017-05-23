@@ -1,16 +1,16 @@
-import Document, { Head, Main, NextScript } from 'next/document';
-import flush from 'styled-jsx/server';
+import Document, { Head, Main, NextScript } from 'next/document'
+import flush from 'styled-jsx/server'
 
 export default class SeemlyDocument extends Document {
-  static getInitialProps({ renderPage }) {
-    const { html, head } = renderPage();
-    const styles = flush();
-    return { html, head, styles };
+  static getInitialProps ({ renderPage }) {
+    const { html, head } = renderPage()
+    const styles = flush()
+    return { html, head, styles }
   }
 
-  render() {
+  render () {
     return (
-      <html lang="en">
+      <html lang='en'>
         <Head>
           <style>{`
             * {
@@ -25,6 +25,6 @@ export default class SeemlyDocument extends Document {
           <NextScript />
         </body>
       </html>
-    );
+    )
   }
 }
