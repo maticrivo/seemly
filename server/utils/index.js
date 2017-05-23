@@ -33,17 +33,6 @@ const saveHistory = async (widget, data) => {
   })
 }
 
-const emitEvent = (ctx, widget, data) => new Promise(async (resolve, reject) => {
-  try {
-    ctx.io.emit('data', { widget, data: { data } })
-    await ctx.saveHistory(widget, data)
-
-    resolve(true)
-  } catch (err) {
-    reject(err)
-  }
-})
-
 const getJobs = (jobsFolder) => new Promise((resolve, reject) => {
   fs.readdir(jobsFolder, (err, files) => {
     if (err) {
@@ -78,13 +67,13 @@ const getJobs = (jobsFolder) => new Promise((resolve, reject) => {
 
 const jobTick = async (ctx, onTick) => {
   const { widget, data } = await onTick()
-  ctx.emitEvent(ctx, widget, data)
+  ctx.io.emit('data', { widget, data: { data } })
+  await saveHistory(widget, data)
 }
 
 module.exports = {
   getHistory,
   saveHistory,
-  emitEvent,
   getJobs,
   jobTick
 }

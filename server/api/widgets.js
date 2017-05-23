@@ -29,14 +29,14 @@ route.get('/:name', async (ctx) => {
 })
 
 route.put('/:name', async (ctx) => {
-  await ctx.emitEvent(ctx, ctx.params.name, ctx.request.body)
+  const widget = ctx.params.name
+  const data = ctx.request.body
+  ctx.io.emit('data', { widget, data: { data } })
+  await saveHistory(widget, data)
 
   ctx.response.body = {
-    [ctx.params.name]: {
-      data: ctx.request.body
-    }
+    [widget]: { data }
   }
-
 })
 
 const widgets = () => compose([

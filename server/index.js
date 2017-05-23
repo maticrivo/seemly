@@ -7,7 +7,7 @@ const nextjs = require('next')
 const Router = require('koa-router')
 const middlewares = require('./middlewares')
 const api = require('./api')
-const { emitEvent, saveHistory, getJobs, jobTick } = require('./utils')
+const { getJobs, jobTick } = require('./utils')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = nextjs({ dev })
@@ -21,8 +21,6 @@ app.prepare().then(async () => {
     const io = IO(server)
 
     koa.context.io = io
-    koa.context.emitEvent = emitEvent
-    koa.context.saveHistory = saveHistory
     koa.context.jobs = await getJobs(path.join(__dirname, '..', 'jobs'))
 
     koa.use(middlewares())
