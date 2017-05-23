@@ -14,7 +14,7 @@ route.use('*', handleErrors())
 
 route.post('/refresh', async (ctx) => {
   ctx.io.emit('refresh')
-  ctx.res.body = { refresh: true }
+  ctx.response.status = 204
 })
 
 const api = () => compose([
