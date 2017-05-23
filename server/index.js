@@ -50,7 +50,7 @@ app.prepare().then(async () => {
 
     koa.context.jobs.map((job) => {
       const onTick = job.options.onTick
-      job.options.onTick = () => jobTick(koa.context, onTick)
+      job.options.onTick = () => jobTick(koa.context.io, onTick)
 
       const cron = new CronJob(job.options)
       cron.start()

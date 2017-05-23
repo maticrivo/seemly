@@ -65,9 +65,9 @@ const getJobs = (jobsFolder) => new Promise((resolve, reject) => {
   })
 })
 
-const jobTick = async (ctx, onTick) => {
+const jobTick = async (io, onTick) => {
   const { widget, data } = await onTick()
-  ctx.io.emit('data', { widget, data: { data } })
+  io.emit('data', { widget, data: { data } })
   await saveHistory(widget, data)
 }
 
