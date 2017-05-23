@@ -4,7 +4,7 @@ module.exports = {
     type: 'input',
     name: 'name',
     message: 'What should it be called?',
-    default: 'Dashing',
+    default: 'Seemly',
     validate: (value) => {
       if (!(/.+/).test(value)) {
         return 'The name is required'

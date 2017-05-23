@@ -1,10 +1,15 @@
-import Widget from '../../lib/widget'
+import widget from '../../lib/widget'
 
-const Title = ({ title, subtitle, style = {} }) => (
-  <Widget style={style}>
-    <h1>{title}</h1>
-    {subtitle && <h2>{subtitle}</h2>}
-  </Widget>
-)
+@widget
+class Title extends React.Component {
+  render () {
+    return (
+      <div style={this.props.style}>
+        <h1>{this.props.title}</h1>
+        {this.props.subtitle && <h2>{this.props.subtitle}</h2>}
+      </div>
+    )
+  }
+}
 
 export default Title

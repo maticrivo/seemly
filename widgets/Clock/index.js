@@ -1,7 +1,8 @@
 import moment from 'moment-timezone'
 
-import Widget from '../../lib/widget'
+import widget from '../../lib/widget'
 
+@widget
 class Clock extends React.Component {
   constructor (props) {
     super(props)
@@ -33,10 +34,10 @@ class Clock extends React.Component {
     const time = timezone ? now.tz(timezone) : now
 
     return (
-      <Widget style={this.props.style}>
+      <div style={this.props.style}>
         {showDate && <h2>{time.format(dateFormat)}</h2>}
         <h1>{time.format(timeFormat)}</h1>
-      </Widget>
+      </div>
     )
   }
 }
