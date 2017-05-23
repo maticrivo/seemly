@@ -30,6 +30,7 @@ export default class extends React.Component {
   componentDidMount() {
     this.socket = io();
 
+    this.socket.on('refresh', () => { window.location.reload(); });
     this.socket.on('data', this.recieveData);
   }
 
