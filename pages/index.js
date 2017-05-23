@@ -5,7 +5,7 @@ import get from 'lodash/get'
 import Dashboard from '../lib/dashboard'
 import Title from '../widgets/Title'
 
-export default class extends React.Component {
+class Index extends React.Component {
   static async getInitialProps ({ req }) {
     let apiUrl
     if (req) {
@@ -51,3 +51,5 @@ export default class extends React.Component {
     )
   }
 }
+
+export default Index
