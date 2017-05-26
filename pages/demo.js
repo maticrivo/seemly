@@ -34,8 +34,6 @@ class Demo extends React.Component {
             textAlign: 'center'
           }}
         />
-
-        {this.props.children}
       </div>
     )
   }
